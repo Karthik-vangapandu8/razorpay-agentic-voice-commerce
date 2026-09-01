@@ -45,29 +45,21 @@
 ## 📁 Repository Structure
 
 ```
-razorpay/
-├── commerce/                          # 🧮 Deterministic Commerce Engine
-│   ├── models.py                      # Pydantic data models & OrderStatus enum
-│   ├── engine.py                      # Pricing, spend rails, and state machine
-│   └── webhook.py                     # Idempotent Razorpay webhook handler
+razorpay-agentic-voice-commerce/
+├── backend/                           # 🐍 FastAPI Python Backend Server
+│   ├── api_server.py                  # REST & Voice Streaming Endpoints (Port 8000)
+│   ├── commerce/                      # 🧮 Deterministic Commerce Engine
+│   │   ├── models.py                  # Pydantic models & OrderStatus enum
+│   │   ├── engine.py                  # Pricing, spend rails, and state machine
+│   │   └── webhook.py                 # Idempotent Razorpay webhook handler
+│   ├── prompts/                       # 📁 Modular Jinja2 Prompt Library
+│   ├── tools/                         # 🛠️ Modular AI Tools Package
+│   ├── bills/                         # 🧾 Generated Store Invoices & Receipts
+│   ├── gym_store.db                   # 📦 SQLite Product & Wallet Database
+│   ├── experiment_poc.py              # 🎙️ End-to-End CLI Voice Assistant Engine
+│   └── test_failure_scenarios.py      # 🧪 Automated CLI Failure Test Suite (7/7 Passed)
 │
-├── prompts/                           # 📁 Modular Jinja2 Prompt Library
-│   ├── base_sales_agent.j2            # Master composable system prompt
-│   ├── stages/                        # Sales lifecycle stages (greeting, discovery, etc.)
-│   └── languages/                     # Indian language code-switching rules
-│
-├── tools/                             # 🛠️ Modular AI Tools Package
-│   ├── __init__.py                    # Unified tool registry
-│   ├── db_tools.py                    # SQLite inventory search
-│   ├── commerce_tools.py              # Safe pricing & checkout intent tools
-│   ├── wallet_service.py              # Programmable wallet & ledger
-│   └── razorpay_gateway.py            # Live Razorpay Payment Link generator
-│
-├── bills/                             # 🧾 Generated Store Invoices & Receipts
-├── gym_store.db                       # 📦 SQLite Product & Wallet Database
-├── prompt_manager.py                  # 🧠 Dynamic Jinja2 Context Controller
-├── experiment_poc.py                  # 🎙️ End-to-End Voice Assistant Engine
-└── test_failure_scenarios.py          # 🧪 Automated CLI Failure Test Suite (7/7 Passed)
+└── frontend/                          # ⚛️ Next.js Web UI App (Coming Next)
 ```
 
 ---
