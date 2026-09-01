@@ -1,0 +1,25 @@
+============================================================
+🏋️‍♂️  MUSCLEBLAZE OFFICIAL STORE INVOICE
+============================================================
+Order ID      : MB-ORD-20260901-2B4D48
+Date & Time   : 2026-09-01 19:16:42
+Customer Name : Kartik
+Order Status  : ORDER_CONFIRMED
+------------------------------------------------------------
+ITEMS ORDERED:
+  • MuscleBlaze Creatine Monohydrate 250g (Qty: 1 x ₹999.00 = ₹999.00)
+
+------------------------------------------------------------
+Subtotal            : ₹999.00
+Combo Discount      : -₹0.00
+Coupon (FIT10): -₹99.90
+FREE Perks Included : None
+------------------------------------------------------------
+TOTAL AMOUNT PAYABLE: ₹899.10
+------------------------------------------------------------
+PAYMENT BREAKDOWN:
+  • Paid via Agentic Wallet : ₹899.10
+  • Pending on Razorpay     : ₹0.00
+  • Razorpay Payment Link   : N/A (Fully Paid via Wallet)
+============================================================
+Audit Verification : KYA Verified (AGENT-MB-ROHAN-01)

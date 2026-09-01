@@ -1,0 +1,72 @@
+{
+  "order_id": "MB-ORD-20260901-33CF74",
+  "customer_name": "Kartik",
+  "items": [
+    {
+      "product_id": 3,
+      "name": "MuscleBlaze Creatine Monohydrate 250g",
+      "unit_price": 999.0,
+      "quantity": 1,
+      "line_total": 999.0,
+      "flavour": "Unflavored"
+    }
+  ],
+  "quote": {
+    "items": [
+      {
+        "product_id": 3,
+        "name": "MuscleBlaze Creatine Monohydrate 250g",
+        "unit_price": 999.0,
+        "quantity": 1,
+        "line_total": 999.0,
+        "flavour": "Unflavored"
+      }
+    ],
+    "subtotal": 999.0,
+    "combo_discount": 0.0,
+    "coupon_code": "FIT10",
+    "coupon_discount": 99.9,
+    "total_discount": 99.9,
+    "free_gifts": [],
+    "final_total": 899.1,
+    "is_valid": true,
+    "error_message": null
+  },
+  "status": "ORDER_CONFIRMED",
+  "wallet_paid": 899.1,
+  "razorpay_paid": 0.0,
+  "razorpay_pending": 0.0,
+  "razorpay_payment_link": null,
+  "razorpay_payment_id": null,
+  "audit": {
+    "agent_id": "AGENT-MB-ROHAN-01",
+    "kya_verified": true,
+    "channel": "VOICE_AI_SARVAM_GROQ",
+    "spend_rails_passed": true,
+    "state_history": [
+      {
+        "state": "PRICE_CONFIRMED",
+        "timestamp": "2026-09-01 19:30:17"
+      },
+      {
+        "state": "CUSTOMER_APPROVED",
+        "timestamp": "2026-09-01 19:30:17"
+      },
+      {
+        "state": "PAYMENT_PENDING",
+        "timestamp": "2026-09-01 19:30:17"
+      },
+      {
+        "state": "PAID",
+        "timestamp": "2026-09-01 19:30:17"
+      },
+      {
+        "state": "ORDER_CONFIRMED",
+        "timestamp": "2026-09-01 19:30:17"
+      }
+    ],
+    "created_at": "2026-09-01 19:30:17"
+  },
+  "created_at": "2026-09-01 19:30:17",
+  "updated_at": "2026-09-01 19:30:17"
+}

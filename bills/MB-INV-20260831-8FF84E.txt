@@ -1,0 +1,19 @@
+============================================================
+🏋️‍♂️  MUSCLEBLAZE OFFICIAL STORE INVOICE
+============================================================
+Invoice ID    : MB-INV-20260831-8FF84E
+Date & Time   : 2026-08-31 19:59:00
+Customer Name : Kartik
+Order Status  : Order Confirmed & Locked
+------------------------------------------------------------
+ITEMS ORDERED:
+  • MuscleBlaze Full Stack Combo
+    Qty: 1 x ₹8,096.00 = ₹8,096.00
+
+------------------------------------------------------------
+Subtotal            : ₹8,096.00
+Discount (FIT10 - 10.0%): -₹809.60
+FREE Perks Included : MuscleBlaze Premium Shaker Bottle
+------------------------------------------------------------
+GRAND TOTAL PAYABLE : ₹7,286.40
+============================================================
