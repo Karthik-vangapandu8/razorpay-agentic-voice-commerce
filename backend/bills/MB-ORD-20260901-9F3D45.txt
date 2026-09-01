@@ -1,0 +1,25 @@
+============================================================
+🏋️‍♂️  MUSCLEBLAZE OFFICIAL STORE INVOICE
+============================================================
+Order ID      : MB-ORD-20260901-9F3D45
+Date & Time   : 2026-09-01 20:16:30
+Customer Name : Kartik
+Order Status  : ORDER_CONFIRMED
+------------------------------------------------------------
+ITEMS ORDERED:
+  • MuscleBlaze Biozyme Performance Whey 2kg (Qty: 1 x ₹4,499.00 = ₹4,499.00)
+
+------------------------------------------------------------
+Subtotal            : ₹4,499.00
+Combo Discount      : -₹0.00
+Coupon (FIT10): -₹449.90
+FREE Perks Included : MuscleBlaze Premium Shaker Bottle (Free)
+------------------------------------------------------------
+TOTAL AMOUNT PAYABLE: ₹4,049.10
+------------------------------------------------------------
+PAYMENT BREAKDOWN:
+  • Paid via Agentic Wallet : ₹4,049.10
+  • Pending on Razorpay     : ₹0.00
+  • Razorpay Payment Link   : N/A (Fully Paid via Wallet)
+============================================================
+Audit Verification : KYA Verified (AGENT-MB-ROHAN-01)
