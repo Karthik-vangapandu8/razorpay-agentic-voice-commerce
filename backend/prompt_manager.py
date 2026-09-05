@@ -143,15 +143,29 @@ Output strictly ONE word: discovery, recommendation, objection, checkout, or gre
             self.set_stage("discovery")
 
     def render_system_prompt(self, **kwargs) -> str:
-        """Render the master modular base_sales_agent.j2 prompt with all sub-templates."""
+        """Render the master modular base_sales_agent.j2 prompt with all sub-templates and merchant knowledge."""
+        try:
+            from tools.merchant_service import get_store_config
+            cfg = get_store_config()
+            agent_name = cfg.agent_name or self.agent_name
+            store_name = cfg.store_name or self.store_name
+            knowledge_specs = cfg.knowledge_specs or ""
+            active_offers = cfg.active_offers or self.active_offers
+        except Exception:
+            agent_name = self.agent_name
+            store_name = self.store_name
+            knowledge_specs = ""
+            active_offers = self.active_offers
+
         template = jinja_env.get_template("base_sales_agent.j2")
         context = {
-            "agent_name": self.agent_name,
-            "store_name": self.store_name,
+            "agent_name": agent_name,
+            "store_name": store_name,
+            "knowledge_specs": knowledge_specs,
             "customer_name": self.customer_name,
             "fitness_goal": self.fitness_goal,
             "stage": self.current_stage,
-            "active_offers": self.active_offers,
+            "active_offers": active_offers,
             **kwargs
         }
         return template.render(context)
