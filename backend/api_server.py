@@ -411,7 +411,8 @@ def groq_post_with_retry(payload: dict, max_retries: int = 3) -> dict:
                         continue
                 return res_json
             elif res.status_code == 429:
-                print(f"⏳ [429 RATE LIMIT] Key ending in ...{current_key[-6:]} rate limited. Rotating to next Groq API key...")
+                print(f"⏳ [429 RATE LIMIT] Key ending in ...{current_key[-6:]} rate limited. Waiting 1.0s and rotating to next Groq API key...")
+                time.sleep(1.0)
                 continue
             else:
                 print(f"⚠️ Groq API Error ({res.status_code}): {res.text}")
@@ -522,15 +523,19 @@ def process_turn(session_id: str, customer_name: str, user_text: str, lang_code:
     cleaned_reply = clean_speech_text(assistant_reply)
     
     # Auto-run product search if stage is recommendation but LLM did not invoke search_gym_products tool
-    if not highlighted_products and prompt_manager.current_stage == "recommendation":
+    if not highlighted_products and prompt_manager.current_stage in ["discovery", "recommendation"]:
         try:
-            search_query = prompt_manager.fitness_goal or user_text
-            for m in reversed(history):
-                if m.get("role") == "user":
-                    txt = m.get("content", "")
-                    if any(w in txt.lower() for w in ["weight loss", "fat loss", "mass gainer", "muscle", "protein", "lean", "isolate", "वेइट", "वेट", "लॉस", "गेनर", "प्रोटीन", "मास"]):
-                        search_query = txt
-                        break
+            search_query = user_text
+            # Map common Hindi/transcribed product keywords
+            if any(w in user_text.lower() for w in ["मिसेली", "ओट्स", "ब्रेकफास्ट", "oats", "breakfast", "muesli"]):
+                search_query = "oats"
+            elif any(w in user_text.lower() for w in ["प्रोटीन", "व्हे", "protein", "whey", "biozyme"]):
+                search_query = "whey protein"
+            elif any(w in user_text.lower() for w in ["क्रिएटिन", "creatine"]):
+                search_query = "creatine"
+            elif any(w in user_text.lower() for w in ["गेनर", "gainer"]):
+                search_query = "mass gainer"
+
             tool_out = TOOL_FUNCTION_MAP["search_gym_products"](query=search_query)
             if tool_out and not tool_out.startswith("No matching"):
                 p_data = json.loads(tool_out)
