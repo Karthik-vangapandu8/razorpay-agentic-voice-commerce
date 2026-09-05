@@ -118,6 +118,27 @@ def pay_from_wallet(customer_name: str, amount: float, invoice_id: str, item_nam
         "invoice_id": invoice_id
     }, ensure_ascii=False)
 
+def topup_wallet_balance(customer_name: str = "Kartik", amount: float = 1000.0) -> str:
+    """Add money / top up customer's Programmable Wallet."""
+    wallet = get_or_create_wallet(customer_name)
+    new_balance = round(wallet.balance + amount, 2)
+    now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    tx_id = f"TXN-TOPUP-{uuid.uuid4().hex[:6].upper()}"
+
+    conn = sqlite3.connect(WALLET_DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute("UPDATE wallets SET balance = ? WHERE wallet_id = ?", (new_balance, wallet.wallet_id))
+    cursor.execute("INSERT INTO wallet_transactions VALUES (?, ?, ?, 'CREDIT_TOPUP', 'TOPUP', 'Wallet Top-Up', ?)", (tx_id, wallet.wallet_id, amount, now_str))
+    conn.commit()
+    conn.close()
+
+    print(f"\n💳 [WALLET TOPUP] Added ₹{amount:,.2f} | New Balance: ₹{new_balance:,.2f} | TxID: {tx_id}")
+    return json.dumps({
+        "status": "success",
+        "added_amount": f"₹{amount:,.2f}",
+        "new_balance": f"₹{new_balance:,.2f}"
+    }, ensure_ascii=False)
+
 WALLET_TOOL_SCHEMAS = [
     {
         "type": "function",
@@ -130,6 +151,21 @@ WALLET_TOOL_SCHEMAS = [
                     "customer_name": {"type": "string"}
                 },
                 "required": ["customer_name"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "topup_wallet_balance",
+            "description": "Add money / top up customer's Programmable Wallet balance when requested.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "customer_name": {"type": "string"},
+                    "amount": {"type": "number", "description": "Amount in INR to add to wallet"}
+                },
+                "required": ["customer_name", "amount"]
             }
         }
     },

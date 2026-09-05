@@ -156,15 +156,19 @@ def execute_order_checkout(
     customer_name: str,
     items_request: List[Dict[str, Any]],
     coupon_code: str = "FIT10",
-    pay_via_wallet: bool = True
+    pay_via_wallet: bool = True,
+    payment_method: str = "ONLINE",
+    delivery_address: str = ""
 ) -> Dict[str, Any]:
     """
     DETERMINISTIC MONEY & ORDER WORKFLOW:
     Step 1: CART_CREATED -> PRICE_CONFIRMED
     Step 2: Check Spend Rails (Max ₹15k)
-    Step 3: CUSTOMER_APPROVED -> PAYMENT_PENDING
+    Step 3: CUSTOMER_APPROVED -> PAYMENT_PENDING / ORDER_CONFIRMED
     Step 4: Attempt Wallet Debit (if pay_via_wallet is True)
-    Step 5: If partial/unpaid -> Generate real Razorpay Payment Link
+    Step 5: Handle Payment Method (COD vs ONLINE):
+            - If COD: No Razorpay link, Order Confirmed directly.
+            - If ONLINE: Generate Razorpay link for remaining balance.
     Step 6: Update State Machine: PARTIALLY_PAID or PAID or ORDER_CONFIRMED
     Step 7: Persist immutable receipt and audit trail to bills/
     """
@@ -185,8 +189,12 @@ def execute_order_checkout(
             "error": f"Total amount ₹{quote.final_total:,.2f} exceeds AI Agent safety spend rail of ₹15,000.00."
         }
         
+    is_cod = str(payment_method).strip().upper() in ["COD", "CASH ON DELIVERY", "CASH"]
+    
     order = Order(
         customer_name=customer_name,
+        delivery_address=delivery_address,
+        payment_method="COD" if is_cod else payment_method.upper(),
         items=quote.items,
         quote=quote,
         status=OrderStatus.PRICE_CONFIRMED
@@ -196,8 +204,6 @@ def execute_order_checkout(
     now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     order.audit.state_history.append({"state": OrderStatus.PRICE_CONFIRMED.value, "timestamp": now_str})
     order.audit.state_history.append({"state": OrderStatus.CUSTOMER_APPROVED.value, "timestamp": now_str})
-    order.status = OrderStatus.PAYMENT_PENDING
-    order.audit.state_history.append({"state": OrderStatus.PAYMENT_PENDING.value, "timestamp": now_str})
     
     wallet_paid = 0.0
     from tools.wallet_service import get_or_create_wallet, WALLET_DB_PATH
@@ -226,26 +232,31 @@ def execute_order_checkout(
     remaining_to_pay = round(quote.final_total - wallet_paid, 2)
     order.razorpay_pending = remaining_to_pay
     
-    # 4. Determine Exact State
+    # 4. Determine Payment State & Razorpay Link Generation
     razorpay_link = None
-    if remaining_to_pay == 0.0:
+    if is_cod:
+        # Cash on Delivery: No Razorpay payment link generated!
+        order.status = OrderStatus.ORDER_CONFIRMED
+        order.audit.state_history.append({"state": OrderStatus.ORDER_CONFIRMED.value, "timestamp": now_str})
+    elif remaining_to_pay == 0.0:
         # 100% Paid via Wallet!
         order.status = OrderStatus.ORDER_CONFIRMED
         order.audit.state_history.append({"state": OrderStatus.PAID.value, "timestamp": now_str})
         order.audit.state_history.append({"state": OrderStatus.ORDER_CONFIRMED.value, "timestamp": now_str})
     else:
-        # Partial or Zero Wallet Payment -> Generate Razorpay Link
+        # Online payment required for remaining balance -> Generate Razorpay Link
         if wallet_paid > 0:
             order.status = OrderStatus.PARTIALLY_PAID
             order.audit.state_history.append({"state": OrderStatus.PARTIALLY_PAID.value, "timestamp": now_str})
         else:
             order.status = OrderStatus.PAYMENT_PENDING
+            order.audit.state_history.append({"state": OrderStatus.PAYMENT_PENDING.value, "timestamp": now_str})
             
         from tools.razorpay_gateway import create_razorpay_payment_link
         rzp_res = json.loads(create_razorpay_payment_link(
             customer_name=customer_name,
             amount_inr=remaining_to_pay,
-            description=f"Remaining balance for {order.order_id}",
+            description=f"Remaining balance for order",
             invoice_id=order.order_id
         ))
         razorpay_link = rzp_res.get("payment_url")
@@ -268,10 +279,12 @@ def execute_order_checkout(
 ============================================================
 🏋️‍♂️  MUSCLEBLAZE OFFICIAL STORE INVOICE
 ============================================================
-Order ID      : {order.order_id}
-Date & Time   : {order.created_at}
-Customer Name : {order.customer_name}
-Order Status  : {order.status.value}
+Order ID         : {order.order_id}
+Date & Time      : {order.created_at}
+Customer Name    : {order.customer_name}
+Delivery Address : {order.delivery_address or 'Standard Shipping Address'}
+Payment Method   : {order.payment_method}
+Order Status     : {order.status.value}
 ------------------------------------------------------------
 ITEMS ORDERED:
 {items_formatted}
@@ -286,8 +299,8 @@ TOTAL AMOUNT PAYABLE: ₹{quote.final_total:,.2f}
 ------------------------------------------------------------
 PAYMENT BREAKDOWN:
   • Paid via Agentic Wallet : ₹{order.wallet_paid:,.2f}
-  • Pending on Razorpay     : ₹{order.razorpay_pending:,.2f}
-  • Razorpay Payment Link   : {order.razorpay_payment_link or 'N/A (Fully Paid via Wallet)'}
+  • Pending Payment         : ₹{order.razorpay_pending:,.2f} ({order.payment_method})
+  • Payment Link            : {order.razorpay_payment_link or ('COD Order - Pay on Delivery' if is_cod else 'N/A (Fully Paid)')}
 ============================================================
 Audit Verification : KYA Verified (AGENT-MB-ROHAN-01)
 """
@@ -304,9 +317,11 @@ Audit Verification : KYA Verified (AGENT-MB-ROHAN-01)
         "order_id": order.order_id,
         "order_status": order.status.value,
         "customer": customer_name,
+        "delivery_address": order.delivery_address,
+        "payment_method": order.payment_method,
         "total_amount": f"₹{quote.final_total:,.2f}",
         "wallet_paid": f"₹{order.wallet_paid:,.2f}",
-        "razorpay_pending": f"₹{order.razorpay_pending:,.2f}",
+        "razorpay_pending": f"₹{order.razorpay_pending:,.2f}" if not is_cod else "₹0.00 (Cash on Delivery)",
         "razorpay_payment_link": order.razorpay_payment_link,
         "free_gifts": quote.free_gifts,
         "receipt_file": receipt_txt_path

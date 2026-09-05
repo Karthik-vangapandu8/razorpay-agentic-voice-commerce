@@ -1,4 +1,6 @@
 import os
+import requests
+from typing import Optional
 import jinja2
 
 PROMPTS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "prompts")
@@ -51,26 +53,94 @@ class SalesPromptManager:
         else:
             self.current_stage = "recommendation"
 
+    def detect_intent_sarvam(self, transcript: str) -> Optional[str]:
+        """Use Sarvam AI LLM (sarvam-105b-conversations) to understand customer speech intent across Indian languages."""
+        sarvam_key = os.getenv("SARVAM_API_KEY", "")
+        if not sarvam_key:
+            return None
+
+        url = "https://api.sarvam.ai/v1/chat/completions"
+        headers = {"api-subscription-key": sarvam_key, "Content-Type": "application/json"}
+        system_prompt = """You are an expert sales conversation stage classifier for a supplement store (MuscleBlaze).
+Analyze the customer's input and output ONLY ONE word from:
+- recommendation: Customer provides ANY qualification detail (such as age e.g. 'मेरा एज 22 है', '20 years old', workout days, gym frequency, health issues, lactose sensitivity, veg/non-veg).
+- discovery: Customer asks about products, protein, mass gainers, weight gain, fat loss, needs help selecting, asks recommendations, or expresses any fitness goal.
+- objection: Customer asks for discount, coupon, price drop, or complains about price.
+- checkout: Customer expresses intent to buy, order, place order, pay, or add to cart.
+- greeting: Customer ONLY says hello/hi/namaste with NO age, NO numbers, NO goal, and NO product mention.
+
+Output strictly ONE word: discovery, recommendation, objection, checkout, or greeting."""
+
+        payload = {
+            "model": "sarvam-105b-conversations",
+            "messages": [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": transcript}
+            ],
+            "max_tokens": 10,
+            "temperature": 0.1
+        }
+        try:
+            res = requests.post(url, headers=headers, json=payload, timeout=4)
+            if res.status_code == 200:
+                out = res.json()["choices"][0]["message"]["content"].strip().lower()
+                for stage in self.VALID_STAGES:
+                    if stage in out:
+                        print(f"🤖 Sarvam LLM Classified Intent: '{stage}' for input: '{transcript[:40]}...'")
+                        return stage
+        except Exception as e:
+            print(f"Sarvam LLM intent classification fallback to rules: {e}")
+        return None
+
     def auto_detect_stage(self, transcript: str, turn: int):
-        """Intelligently switch conversation stage based on customer speech semantics."""
+        """Intelligently switch conversation stage using Sarvam LLM primary intent classification with keyword fallback."""
+        sarvam_stage = self.detect_intent_sarvam(transcript)
+        
+        # If in an active consultative stage (discovery/recommendation), never downgrade to greeting unless user explicitly says hi/hello
+        if sarvam_stage == "greeting" and self.current_stage in ["discovery", "recommendation"]:
+            t_lower = transcript.lower()
+            if not any(w in t_lower for w in ["hi", "hello", "namaste", "నమస్తే", "नमस्ते"]):
+                sarvam_stage = "discovery"
+
+        if sarvam_stage and sarvam_stage in self.VALID_STAGES:
+            self.set_stage(sarvam_stage)
+            return
+
         t = transcript.lower()
         
         # Objection & Discount Negotiation
-        if any(w in t for w in ["discount", "offer", "coupon", "code", "rate ekkuva", "price high", "too expensive", "taggichu", "kam karo", "kam kijiye"]):
+        if any(w in t for w in [
+            "discount", "offer", "coupon", "code", "rate ekkuva", "price high", "too expensive",
+            "taggichu", "kam karo", "kam kijiye", "డిస్కౌంట్", "ఆఫర్", "కూపన్", "రేటు", "తగ్గించు",
+            "తక్కువ", "கார்ட்", "ஆர்டர்", "கூப்பன்"
+        ]):
             self.set_stage("objection")
         # Checkout & Buy Intent
-        elif any(w in t for w in ["buy", "order", "book", "cart", "payment", "konali", "teesukunta", "khareedna", "pack kar do"]):
+        elif any(w in t for w in [
+            "buy", "order", "book", "cart", "payment", "konali", "teesukunta", "khareedna", "pack kar do",
+            "కార్ట్", "ఆర్డర్", "కూపన్", "కొనుక్కుంటా", "పేమెంట్", "ఆర్డర్ పెట్టేయ్", "ఆర్డర్ ప్లేస్",
+            "ఆర్డర్ చెయ్యి", "కార్ట్ లో", "కొనాలి", "வாங்க", "கட்டணம்", "कार्ट", "ऑर्डर", "कूपन", "खरीदना"
+        ]):
             self.set_stage("checkout")
-        # Discovery / Goal Discussion
-        elif any(w in t for w in ["goal", "fat loss", "muscle gain", "weight loss", "beginner", "suggest", "which one", "edhi better"]):
-            self.set_stage("discovery")
-        # Specific Product Recommendation & Pricing
-        elif any(w in t for w in ["whey", "protein", "creatine", "peanut butter", "pre workout", "biozyme", "rate", "price", "stock"]):
+        # Qualification Response (customer provided age/workout/health/diet details)
+        elif any(w in t for w in [
+            "year", "yrs", "din", "days", "gym", "health", "issue", "veg", "non-veg", "nonveg",
+            "age", "saal", "lactose", "sensitivity", "brother", "సంవత్సరాలు", "జిమ్", "వయస్సు", "సమస్య", "ఏజ్",
+            "लैकोस्ट", "सेंसिविटी", "लैक्टोज", "भाई", "ऐज", "बार"
+        ]) or any(c.isdigit() for c in t):
             self.set_stage("recommendation")
+        # Goal / Product Inquiry (Initial Discovery phase)
+        elif any(w in t for w in [
+            "goal", "fat loss", "muscle gain", "muscle increase", "mass gainer", "mass gainers", "weight loss",
+            "beginner", "suggest", "which one", "edhi better", "whey", "protein", "creatine", "peanut butter",
+            "pre workout", "biozyme", "gainer", "లీన్ బాడీ", "వెయిట్ గెయిన్", "మజిల్", "గోల్", "బరువు",
+            "ఫ్యాట్ లాస్", "మాస్ గేనర్", "ప్రోటీన్", "వే", "బయోజైమ్", "మాస్ గేనర్స్", "मास गेनर", "मसल इनक्रीस", "प्रोटीन"
+        ]):
+            self.set_stage("discovery")
         elif turn == 1:
             self.set_stage("greeting")
         else:
-            self.set_stage("recommendation")
+            self.set_stage("discovery")
 
     def render_system_prompt(self, **kwargs) -> str:
         """Render the master modular base_sales_agent.j2 prompt with all sub-templates."""

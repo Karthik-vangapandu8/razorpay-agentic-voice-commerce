@@ -35,6 +35,10 @@ ENV/
 .env.local
 .env.*.local
 
+# Runtime Invoices & Databases
+backend/bills/*.json
+backend/bills/*.txt
+
 # OS Specific
 .DS_Store
 Thumbs.db

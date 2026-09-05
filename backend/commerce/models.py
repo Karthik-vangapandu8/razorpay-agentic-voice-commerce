@@ -50,6 +50,8 @@ class OrderAuditTrail(BaseModel):
 class Order(BaseModel):
     order_id: str = Field(default_factory=lambda: f"MB-ORD-{datetime.now().strftime('%Y%m%d')}-{uuid.uuid4().hex[:6].upper()}")
     customer_name: str
+    delivery_address: Optional[str] = ""
+    payment_method: Optional[str] = "ONLINE"
     items: List[PricingLineItem]
     quote: CartQuote
     status: OrderStatus = OrderStatus.CART_CREATED

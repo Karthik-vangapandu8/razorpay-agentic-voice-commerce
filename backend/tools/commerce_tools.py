@@ -20,7 +20,9 @@ def process_order_checkout(
     customer_name: str,
     items: Any,
     coupon_code: str = "FIT10",
-    pay_via_wallet: Any = "true"
+    pay_via_wallet: Any = "true",
+    payment_method: str = "ONLINE",
+    delivery_address: str = ""
 ) -> str:
     """
     Tool: Execute deterministic money workflow:
@@ -43,7 +45,9 @@ def process_order_checkout(
         customer_name=customer_name,
         items_request=items,
         coupon_code=coupon_code,
-        pay_via_wallet=should_pay_wallet
+        pay_via_wallet=should_pay_wallet,
+        payment_method=payment_method,
+        delivery_address=delivery_address
     )
     return json.dumps(res, ensure_ascii=False)
 
@@ -77,7 +81,7 @@ COMMERCE_TOOL_SCHEMAS = [
         "type": "function",
         "function": {
             "name": "process_order_checkout",
-            "description": "Execute deterministic order checkout with wallet split-pay and Razorpay payment link.",
+            "description": "Execute deterministic order checkout with wallet split-pay, COD or Razorpay payment link.",
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -94,7 +98,9 @@ COMMERCE_TOOL_SCHEMAS = [
                         }
                     },
                     "coupon_code": {"type": "string", "description": "Discount coupon code"},
-                    "pay_via_wallet": {"type": "string", "description": "'true' to deduct available wallet funds, 'false' for full Razorpay link"}
+                    "pay_via_wallet": {"type": "string", "description": "'true' to deduct available wallet funds, 'false' for full Razorpay link"},
+                    "payment_method": {"type": "string", "description": "'COD' for Cash on Delivery (no Razorpay link), or 'ONLINE'/'UPI'/'CARD' to generate payment link for remaining balance"},
+                    "delivery_address": {"type": "string", "description": "Customer delivery address"}
                 },
                 "required": ["customer_name", "items"]
             }
