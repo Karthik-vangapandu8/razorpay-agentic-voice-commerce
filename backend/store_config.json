@@ -1,0 +1,15 @@
+{
+  "store_name": "MuscleBlaze Fitness Store",
+  "agent_name": "Rohan",
+  "agent_tone": "Persuasive, Energetic & Friendly",
+  "active_coupon": "FIT10",
+  "discount_percentage": 10.0,
+  "free_gift_threshold": 1999.0,
+  "free_gift_name": "MuscleBlaze Premium Shaker Bottle (Free)",
+  "active_offers": [
+    "Coupon Code 'FIT10': Instant 10% discount on all orders.",
+    "Free Shaker bottle on orders above ₹1,999.",
+    "Combo deal: Whey + Creatine saves ₹300."
+  ],
+  "knowledge_specs": "MuscleBlaze Biozyme Whey is Labdoor USA certified for accuracy and purity, providing 50% higher protein absorption."
+}

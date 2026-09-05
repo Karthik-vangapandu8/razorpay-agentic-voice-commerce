@@ -1,8 +1,7 @@
 "use client";
 
-import React from "react";
-import { WalletInfo } from "@/types";
-import { Wallet, ShieldCheck, ShoppingBag, Globe, Dumbbell } from "lucide-react";
+import Link from "next/link";
+import { Wallet, ShieldCheck, ShoppingBag, Globe, Dumbbell, Store } from "lucide-react";
 
 interface HeaderProps {
   wallet: WalletInfo | null;
@@ -11,6 +10,7 @@ interface HeaderProps {
   cartCount: number;
   onOpenCart: () => void;
   onOpenWallet: () => void;
+  isMerchantPage?: boolean;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -20,13 +20,14 @@ export const Header: React.FC<HeaderProps> = ({
   cartCount,
   onOpenCart,
   onOpenWallet,
+  isMerchantPage = false,
 }) => {
   return (
     <header className="sticky top-0 z-40 glass-card border-b border-gray-800 px-4 lg:px-8 py-3 transition-all">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         
         {/* Brand Logo */}
-        <div className="flex items-center space-x-3">
+        <Link href="/" className="flex items-center space-x-3 cursor-pointer">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-orange-600 flex items-center justify-center shadow-lg shadow-orange-500/30">
             <Dumbbell className="w-6 h-6 text-black stroke-[2.5]" />
           </div>
@@ -41,11 +42,24 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
             <p className="text-[10px] text-gray-400 font-medium">Agentic Commerce Engine</p>
           </div>
-        </div>
+        </Link>
 
         {/* Right Controls */}
         <div className="flex items-center space-x-3 lg:space-x-4">
           
+          {/* Merchant Portal Toggle */}
+          <Link
+            href={isMerchantPage ? "/" : "/merchant"}
+            className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-extrabold border transition-all cursor-pointer ${
+              isMerchantPage
+                ? "bg-orange-500 text-black border-orange-400 hover:bg-orange-400"
+                : "bg-gray-900/80 hover:bg-gray-800 text-gray-200 border-gray-700"
+            }`}
+          >
+            <Store className="w-3.5 h-3.5" />
+            <span>{isMerchantPage ? "Customer Store" : "Merchant Portal"}</span>
+          </Link>
+
           {/* Language Selector */}
           <div className="flex items-center space-x-1 glass-pill px-2.5 py-1.5 rounded-lg text-xs font-medium border border-gray-700">
             <Globe className="w-3.5 h-3.5 text-orange-400" />

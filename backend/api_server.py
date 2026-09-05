@@ -632,6 +632,81 @@ async def razorpay_webhook_endpoint(request: Request):
         
     return handle_razorpay_webhook(event, payment_id, order_id, amount_paid)
 
+# =========================================================================
+# MERCHANT DASHBOARD API ENDPOINTS
+# =========================================================================
+
+from tools.merchant_service import (
+    get_store_config, save_store_config, StoreConfig,
+    get_all_merchant_products, add_merchant_product, update_merchant_product, delete_merchant_product,
+    get_merchant_orders_ledger
+)
+
+@app.get("/api/merchant/config")
+def merchant_get_config():
+    """Fetch merchant store & agent configuration."""
+    return get_store_config().model_dump()
+
+@app.post("/api/merchant/config")
+def merchant_update_config(config: StoreConfig):
+    """Update merchant store & agent configuration."""
+    save_store_config(config)
+    return {"status": "success", "config": config.model_dump()}
+
+@app.get("/api/merchant/products")
+def merchant_get_products():
+    """Fetch complete product list for merchant CRUD view."""
+    return {"products": get_all_merchant_products()}
+
+class MerchantProductInput(BaseModel):
+    name: str
+    category: str = "Protein"
+    flavour: str = "Standard"
+    price_inr: float
+    stock_count: int = 50
+    rating: float = 4.8
+    description: str = ""
+    image_url: str = ""
+
+@app.post("/api/merchant/products")
+def merchant_add_product(req: MerchantProductInput):
+    """Add a new product to SQLite catalog."""
+    return add_merchant_product(
+        name=req.name,
+        category=req.category,
+        flavour=req.flavour,
+        price_inr=req.price_inr,
+        stock_count=req.stock_count,
+        rating=req.rating,
+        description=req.description,
+        image_url=req.image_url
+    )
+
+@app.put("/api/merchant/products/{product_id}")
+def merchant_update_product(product_id: int, req: MerchantProductInput):
+    """Update an existing product in SQLite catalog."""
+    return update_merchant_product(
+        product_id=product_id,
+        name=req.name,
+        category=req.category,
+        flavour=req.flavour,
+        price_inr=req.price_inr,
+        stock_count=req.stock_count,
+        rating=req.rating,
+        description=req.description,
+        image_url=req.image_url
+    )
+
+@app.delete("/api/merchant/products/{product_id}")
+def merchant_delete_product(product_id: int):
+    """Delete a product from SQLite catalog."""
+    return delete_merchant_product(product_id)
+
+@app.get("/api/merchant/orders")
+def merchant_get_orders():
+    """Fetch live merchant orders ledger."""
+    return {"orders": get_merchant_orders_ledger()}
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
