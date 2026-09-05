@@ -322,19 +322,19 @@ def get_wallet_info(customer_name: str = "Kartik"):
 
 @app.get("/api/greeting")
 def get_initial_greeting(lang_code: str = "hi-IN"):
-    """Get Rohan's initial proactive greeting text & synthesized audio (generic greeting asking for user name)."""
-    greeting_text = "Namaste and Welcome to MuscleBlaze! Main hoon Rohan, aapka sales and fitness advisor. Aapka naam kya hai aur aaj aapka main fitness goal kya hai?"
-    if "te" in lang_code:
-        greeting_text = "నమస్తే! మస్కిల్‌బ్లేజ్ కి స్వాగతం! నేను రోహన్, మీ ఫిట్‌నెస్ అడ్వైజర్. మీ పేరు మరియు మీ గోల్ ఏంటో చెప్పండి!"
-    elif "en" in lang_code:
-        greeting_text = "Hello and welcome to MuscleBlaze! I'm Rohan, your personal fitness and supplement advisor. What is your name and fitness goal today?"
+    """Get Sauda AI's initial proactive greeting text & synthesized audio."""
+    greeting_text = "Welcome to Sauda AI. A merchant can upload their products and product knowledge, and Sauda turns that information into a conversational AI sales executive."
+    if "hi" in lang_code:
+        greeting_text = "Sauda AI में आपका स्वागत है। कोई भी मर्चेंट अपने प्रोडक्ट्स और नॉलेज अपलोड कर सकता है, और सौदा AI उसे एक कन्वर्सेशनल AI सेल्स एग्जीक्यूटिव में बदल देता है।"
+    elif "te" in lang_code:
+        greeting_text = "Sauda AI కి స్వాగతం. ఏ మర్చంట్ అయినా తమ ప్రొడక్ట్స్ మరియు నాలెడ్జ్ అప్‌లోడ్ చేయవచ్చు, మరియు सौदा AI దానిని కాన్వర్సేషనల్ AI సేల్స్ ఎగ్జిక్యూటివ్‌గా మారుస్తుంది."
         
     audio_base64 = synthesize_speech_sarvam(greeting_text, lang_code)
     return {
         "greeting_text": greeting_text,
         "language_code": lang_code,
         "audio_base64": audio_base64,
-        "speaker": "Rohan (AI Sales Advisor)"
+        "speaker": "Rohan (Sauda AI Sales Executive)"
     }
 
 class TextChatRequest(BaseModel):

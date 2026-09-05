@@ -10,7 +10,7 @@ BILLS_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file_
 ORDERS_DB_FILE = os.path.join(BILLS_DIR, "active_orders.json")
 
 class StoreConfig(BaseModel):
-    store_name: str = "MuscleBlaze Fitness Store"
+    store_name: str = "Sauda AI Storefront"
     agent_name: str = "Rohan"
     agent_tone: str = "Persuasive, Energetic & Friendly"
     active_coupon: str = "FIT10"

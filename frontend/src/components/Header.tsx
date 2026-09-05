@@ -33,14 +33,14 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
           <div>
             <div className="flex items-center space-x-2">
-              <span className="font-extrabold text-xl tracking-tight bg-gradient-to-r from-white via-gray-200 to-orange-400 bg-clip-text text-transparent">
-                MUSCLEBLAZE
+              <span className="font-black text-xl tracking-tight bg-gradient-to-r from-white via-gray-200 to-orange-400 bg-clip-text text-transparent">
+                SAUDA AI
               </span>
               <span className="bg-orange-500/20 text-orange-400 text-xs font-bold px-2 py-0.5 rounded-full border border-orange-500/30">
-                VOICE AI
+                VOICE COMMERCE
               </span>
             </div>
-            <p className="text-[10px] text-gray-400 font-medium">Agentic Commerce Engine</p>
+            <p className="text-[10px] text-gray-400 font-medium">Universal Agentic Sales Platform</p>
           </div>
         </Link>
 

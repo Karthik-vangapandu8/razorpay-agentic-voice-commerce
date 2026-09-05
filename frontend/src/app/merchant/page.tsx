@@ -197,7 +197,7 @@ export default function MerchantDashboard() {
               <span>MERCHANT COMMAND CENTER</span>
             </div>
             <h1 className="text-2xl lg:text-3xl font-black text-white tracking-tight">
-              {config?.store_name || "MuscleBlaze Store Management"}
+              {config?.store_name || "Sauda AI — Merchant Command Center"}
             </h1>
             <p className="text-xs text-gray-400 mt-1">
               Configure your multi-tenant catalog, voice AI sales executive, knowledge documents & order ledgers.
@@ -302,6 +302,11 @@ export default function MerchantDashboard() {
                         </div>
                       </div>
 
+                      {p.image_url && (
+                        <div className="w-full h-32 rounded-xl bg-gray-900 mb-3 overflow-hidden border border-gray-800 flex items-center justify-center">
+                          <img src={p.image_url} alt={p.name} className="w-full h-full object-cover" />
+                        </div>
+                      )}
                       <h3 className="font-extrabold text-base text-white mb-1 leading-snug">{p.name}</h3>
                       <p className="text-xs text-gray-400 line-clamp-2 mb-4">{p.description || "No description provided."}</p>
                     </div>
@@ -536,11 +541,23 @@ export default function MerchantDashboard() {
               </div>
 
               <div>
+                <label className="block text-gray-400 font-bold mb-1">Product Image URL</label>
+                <input
+                  type="text"
+                  value={productForm.image_url}
+                  onChange={(e) => setProductForm({ ...productForm, image_url: e.target.value })}
+                  placeholder="e.g. https://images.unsplash.com/photo-1593095940087-05673282b09a"
+                  className="w-full bg-gray-900 border border-gray-800 rounded-xl px-3 py-2 text-white font-semibold focus:border-orange-500 focus:outline-none"
+                />
+              </div>
+
+              <div>
                 <label className="block text-gray-400 font-bold mb-1">Description</label>
                 <textarea
                   rows={2}
                   value={productForm.description}
                   onChange={(e) => setProductForm({ ...productForm, description: e.target.value })}
+                  placeholder="Product description, benefits, and key specs..."
                   className="w-full bg-gray-900 border border-gray-800 rounded-xl px-3 py-2 text-white font-semibold focus:border-orange-500 focus:outline-none text-xs"
                 />
               </div>

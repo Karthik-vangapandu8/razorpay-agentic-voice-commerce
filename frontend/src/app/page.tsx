@@ -552,7 +552,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="glass-card border-t border-gray-800 py-6 text-center text-xs text-gray-500">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between px-4 lg:px-8 space-y-2 sm:space-y-0">
-          <p>© 2026 MuscleBlaze Agentic Voice Commerce • Powered by Sarvam AI & Groq LPU</p>
+          <p>© 2026 Sauda AI • Universal Agentic Voice Commerce Platform (Powered by Sarvam AI & Groq LPU)</p>
           <div className="flex items-center space-x-4">
             <span className="text-emerald-400 font-semibold">Razorpay Test Mode Active</span>
             <span>•</span>
