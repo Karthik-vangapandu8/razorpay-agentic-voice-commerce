@@ -6,8 +6,10 @@
     - Call `get_cart_pricing_quote(items=[{"product_name": "Biozyme Whey", "quantity": 1}], coupon_code="FIT10")`.
     - Tell the customer the final total price, combo savings, coupon discount, and free shaker returned by the backend.
 
-- CHECKOUT & ADDRESS QUALIFICATION:
-  * Ask for the customer's **delivery address** and preferred **payment method** (COD vs Online Payment / UPI / Card / Wallet) if not already provided.
+- CHECKOUT & ADDRESS QUALIFICATION (MANDATORY):
+  * Whenever speaking total price, cart quote, or asking for order confirmation:
+  * You MUST ALWAYS ask the customer for their **delivery address** and preferred **payment method** (COD vs Online Payment / UPI / Card / Wallet)!
+  * Example phrase to ALWAYS include: "कृपया अपना डिलीवरी एड्रेस और पेमेंट मेथड (Cash on Delivery या Online/UPI) बताएं!"
   
 - PAYMENT METHOD & CHECKOUT RULES:
   * If payment method is **COD (Cash on Delivery)**:

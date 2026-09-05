@@ -2210,5 +2210,481 @@
     },
     "created_at": "2026-09-05 19:39:08",
     "updated_at": "2026-09-05 19:39:08"
+  },
+  "MB-ORD-20260905-C0796C": {
+    "order_id": "MB-ORD-20260905-C0796C",
+    "customer_name": "Sir",
+    "delivery_address": "\u0920\u0940\u0915 \u0939\u0948, \u0939\u092e\u093e\u0930\u0947 \u090f\u0921\u094d\u0930\u0947\u0938 \u0936\u093f\u0935\u0938\u093e\u0908 \u092a\u093e\u0928 \u0936\u0949\u092a, \u0906\u0902\u0927\u094d\u0930 \u092a\u094d\u0930\u0926\u0947\u0936, 543011 \u0911\u0930\u094d\u0921\u0930 \u0915\u0930 \u0932\u094b\u0964",
+    "payment_method": "ONLINE",
+    "items": [
+      {
+        "product_id": 1,
+        "name": "MuscleBlaze Biozyme Performance Whey 2kg",
+        "unit_price": 4499.0,
+        "quantity": 1,
+        "line_total": 4499.0,
+        "flavour": "Rich Milk Chocolate"
+      }
+    ],
+    "quote": {
+      "items": [
+        {
+          "product_id": 1,
+          "name": "MuscleBlaze Biozyme Performance Whey 2kg",
+          "unit_price": 4499.0,
+          "quantity": 1,
+          "line_total": 4499.0,
+          "flavour": "Rich Milk Chocolate"
+        }
+      ],
+      "subtotal": 4499.0,
+      "combo_discount": 0.0,
+      "coupon_code": "FIT10",
+      "coupon_discount": 449.9,
+      "total_discount": 449.9,
+      "free_gifts": [
+        "MuscleBlaze Premium Shaker Bottle (Free)"
+      ],
+      "final_total": 4049.1,
+      "is_valid": true,
+      "error_message": null
+    },
+    "status": "PAYMENT_PENDING",
+    "wallet_paid": 0.0,
+    "razorpay_paid": 0.0,
+    "razorpay_pending": 4049.1,
+    "razorpay_payment_link": "https://rzp.io/rzp/4uhclEM",
+    "razorpay_payment_id": null,
+    "audit": {
+      "agent_id": "AGENT-MB-ROHAN-01",
+      "kya_verified": true,
+      "channel": "VOICE_AI_SARVAM_GROQ",
+      "spend_rails_passed": true,
+      "state_history": [
+        {
+          "state": "PRICE_CONFIRMED",
+          "timestamp": "2026-09-05 19:43:15"
+        },
+        {
+          "state": "CUSTOMER_APPROVED",
+          "timestamp": "2026-09-05 19:43:15"
+        },
+        {
+          "state": "PAYMENT_PENDING",
+          "timestamp": "2026-09-05 19:43:15"
+        }
+      ],
+      "created_at": "2026-09-05 19:43:15"
+    },
+    "created_at": "2026-09-05 19:43:15",
+    "updated_at": "2026-09-05 19:43:15"
+  },
+  "MB-ORD-20260905-A95232": {
+    "order_id": "MB-ORD-20260905-A95232",
+    "customer_name": "Kartik",
+    "delivery_address": "",
+    "payment_method": "ONLINE",
+    "items": [
+      {
+        "product_id": 1,
+        "name": "MuscleBlaze Biozyme Performance Whey 2kg",
+        "unit_price": 4499.0,
+        "quantity": 1,
+        "line_total": 4499.0,
+        "flavour": "Rich Milk Chocolate"
+      }
+    ],
+    "quote": {
+      "items": [
+        {
+          "product_id": 1,
+          "name": "MuscleBlaze Biozyme Performance Whey 2kg",
+          "unit_price": 4499.0,
+          "quantity": 1,
+          "line_total": 4499.0,
+          "flavour": "Rich Milk Chocolate"
+        }
+      ],
+      "subtotal": 4499.0,
+      "combo_discount": 0.0,
+      "coupon_code": "FIT10",
+      "coupon_discount": 449.9,
+      "total_discount": 449.9,
+      "free_gifts": [
+        "MuscleBlaze Premium Shaker Bottle (Free)"
+      ],
+      "final_total": 4049.1,
+      "is_valid": true,
+      "error_message": null
+    },
+    "status": "PARTIALLY_PAID",
+    "wallet_paid": 3500.0,
+    "razorpay_paid": 0.0,
+    "razorpay_pending": 549.1,
+    "razorpay_payment_link": "https://rzp.io/rzp/p5p2bJx",
+    "razorpay_payment_id": null,
+    "audit": {
+      "agent_id": "AGENT-MB-ROHAN-01",
+      "kya_verified": true,
+      "channel": "VOICE_AI_SARVAM_GROQ",
+      "spend_rails_passed": true,
+      "state_history": [
+        {
+          "state": "PRICE_CONFIRMED",
+          "timestamp": "2026-09-05 19:44:47"
+        },
+        {
+          "state": "CUSTOMER_APPROVED",
+          "timestamp": "2026-09-05 19:44:47"
+        },
+        {
+          "state": "PARTIALLY_PAID",
+          "timestamp": "2026-09-05 19:44:47"
+        }
+      ],
+      "created_at": "2026-09-05 19:44:47"
+    },
+    "created_at": "2026-09-05 19:44:47",
+    "updated_at": "2026-09-05 19:44:47"
+  },
+  "MB-ORD-20260905-8BC2E2": {
+    "order_id": "MB-ORD-20260905-8BC2E2",
+    "customer_name": "Sir",
+    "delivery_address": "\u0939\u092e \u0907\u0938\u0915\u094b \u0921\u093f\u091f\u0947\u0932 \u091a\u093e\u0939\u093f\u090f \u0914\u0930 \u0939\u092e \u0939\u092e \u0907\u0938\u0940 \u092a\u0930 \u0911\u0930\u094d\u0921\u0930 \u0915\u0930 \u0915\u0930\u0928\u093e \u091a\u093e\u0939\u093f\u090f\u0964",
+    "payment_method": "ONLINE",
+    "items": [
+      {
+        "product_id": 1,
+        "name": "MuscleBlaze Biozyme Performance Whey 2kg",
+        "unit_price": 4499.0,
+        "quantity": 1,
+        "line_total": 4499.0,
+        "flavour": "Rich Milk Chocolate"
+      }
+    ],
+    "quote": {
+      "items": [
+        {
+          "product_id": 1,
+          "name": "MuscleBlaze Biozyme Performance Whey 2kg",
+          "unit_price": 4499.0,
+          "quantity": 1,
+          "line_total": 4499.0,
+          "flavour": "Rich Milk Chocolate"
+        }
+      ],
+      "subtotal": 4499.0,
+      "combo_discount": 0.0,
+      "coupon_code": "FIT10",
+      "coupon_discount": 449.9,
+      "total_discount": 449.9,
+      "free_gifts": [
+        "MuscleBlaze Premium Shaker Bottle (Free)"
+      ],
+      "final_total": 4049.1,
+      "is_valid": true,
+      "error_message": null
+    },
+    "status": "PAYMENT_PENDING",
+    "wallet_paid": 0.0,
+    "razorpay_paid": 0.0,
+    "razorpay_pending": 4049.1,
+    "razorpay_payment_link": "https://rzp.io/rzp/Qo07Sr00",
+    "razorpay_payment_id": null,
+    "audit": {
+      "agent_id": "AGENT-MB-ROHAN-01",
+      "kya_verified": true,
+      "channel": "VOICE_AI_SARVAM_GROQ",
+      "spend_rails_passed": true,
+      "state_history": [
+        {
+          "state": "PRICE_CONFIRMED",
+          "timestamp": "2026-09-05 19:55:57"
+        },
+        {
+          "state": "CUSTOMER_APPROVED",
+          "timestamp": "2026-09-05 19:55:57"
+        },
+        {
+          "state": "PAYMENT_PENDING",
+          "timestamp": "2026-09-05 19:55:57"
+        }
+      ],
+      "created_at": "2026-09-05 19:55:57"
+    },
+    "created_at": "2026-09-05 19:55:57",
+    "updated_at": "2026-09-05 19:55:57"
+  },
+  "MB-ORD-20260905-316664": {
+    "order_id": "MB-ORD-20260905-316664",
+    "customer_name": "Sir",
+    "delivery_address": "541311 Vishakhapatnam",
+    "payment_method": "ONLINE",
+    "items": [
+      {
+        "product_id": 13,
+        "name": "MuscleBlaze BCAA Gold 8:1:1 Amino Acids Supplements",
+        "unit_price": 2239.0,
+        "quantity": 1,
+        "line_total": 2239.0,
+        "flavour": "Chocolate"
+      }
+    ],
+    "quote": {
+      "items": [
+        {
+          "product_id": 13,
+          "name": "MuscleBlaze BCAA Gold 8:1:1 Amino Acids Supplements",
+          "unit_price": 2239.0,
+          "quantity": 1,
+          "line_total": 2239.0,
+          "flavour": "Chocolate"
+        }
+      ],
+      "subtotal": 2239.0,
+      "combo_discount": 0.0,
+      "coupon_code": "FIT10",
+      "coupon_discount": 223.9,
+      "total_discount": 223.9,
+      "free_gifts": [
+        "MuscleBlaze Premium Shaker Bottle (Free)"
+      ],
+      "final_total": 2015.1,
+      "is_valid": true,
+      "error_message": null
+    },
+    "status": "PAYMENT_PENDING",
+    "wallet_paid": 0.0,
+    "razorpay_paid": 0.0,
+    "razorpay_pending": 2015.1,
+    "razorpay_payment_link": "https://rzp.io/rzp/BHeQtCR",
+    "razorpay_payment_id": null,
+    "audit": {
+      "agent_id": "AGENT-MB-ROHAN-01",
+      "kya_verified": true,
+      "channel": "VOICE_AI_SARVAM_GROQ",
+      "spend_rails_passed": true,
+      "state_history": [
+        {
+          "state": "PRICE_CONFIRMED",
+          "timestamp": "2026-09-05 19:56:38"
+        },
+        {
+          "state": "CUSTOMER_APPROVED",
+          "timestamp": "2026-09-05 19:56:38"
+        },
+        {
+          "state": "PAYMENT_PENDING",
+          "timestamp": "2026-09-05 19:56:38"
+        }
+      ],
+      "created_at": "2026-09-05 19:56:38"
+    },
+    "created_at": "2026-09-05 19:56:38",
+    "updated_at": "2026-09-05 19:56:38"
+  },
+  "MB-ORD-20260905-1D85D7": {
+    "order_id": "MB-ORD-20260905-1D85D7",
+    "customer_name": "Sir",
+    "delivery_address": "",
+    "payment_method": "COD",
+    "items": [
+      {
+        "product_id": 1,
+        "name": "MuscleBlaze Biozyme Performance Whey 2kg",
+        "unit_price": 4499.0,
+        "quantity": 1,
+        "line_total": 4499.0,
+        "flavour": "Rich Milk Chocolate"
+      }
+    ],
+    "quote": {
+      "items": [
+        {
+          "product_id": 1,
+          "name": "MuscleBlaze Biozyme Performance Whey 2kg",
+          "unit_price": 4499.0,
+          "quantity": 1,
+          "line_total": 4499.0,
+          "flavour": "Rich Milk Chocolate"
+        }
+      ],
+      "subtotal": 4499.0,
+      "combo_discount": 0.0,
+      "coupon_code": "FIT10",
+      "coupon_discount": 449.9,
+      "total_discount": 449.9,
+      "free_gifts": [
+        "MuscleBlaze Premium Shaker Bottle (Free)"
+      ],
+      "final_total": 4049.1,
+      "is_valid": true,
+      "error_message": null
+    },
+    "status": "ORDER_CONFIRMED",
+    "wallet_paid": 0.0,
+    "razorpay_paid": 0.0,
+    "razorpay_pending": 4049.1,
+    "razorpay_payment_link": null,
+    "razorpay_payment_id": null,
+    "audit": {
+      "agent_id": "AGENT-MB-ROHAN-01",
+      "kya_verified": true,
+      "channel": "VOICE_AI_SARVAM_GROQ",
+      "spend_rails_passed": true,
+      "state_history": [
+        {
+          "state": "PRICE_CONFIRMED",
+          "timestamp": "2026-09-05 20:04:10"
+        },
+        {
+          "state": "CUSTOMER_APPROVED",
+          "timestamp": "2026-09-05 20:04:10"
+        },
+        {
+          "state": "ORDER_CONFIRMED",
+          "timestamp": "2026-09-05 20:04:10"
+        }
+      ],
+      "created_at": "2026-09-05 20:04:10"
+    },
+    "created_at": "2026-09-05 20:04:10",
+    "updated_at": "2026-09-05 20:04:10"
+  },
+  "MB-ORD-20260905-26AA2F": {
+    "order_id": "MB-ORD-20260905-26AA2F",
+    "customer_name": "Sir",
+    "delivery_address": "\u0920\u0940\u0915 \u0939\u0948, \u0924\u0941\u092e \u090f\u0915 \u0915\u093e\u092e \u0915\u0930, \u0911\u0930\u094d\u0921\u0930 \u0915\u0930\u094b \u0907\u0938\u0915\u094b\u0964",
+    "payment_method": "ONLINE",
+    "items": [
+      {
+        "product_id": 1,
+        "name": "MuscleBlaze Biozyme Performance Whey 2kg",
+        "unit_price": 4499.0,
+        "quantity": 1,
+        "line_total": 4499.0,
+        "flavour": "Rich Milk Chocolate"
+      }
+    ],
+    "quote": {
+      "items": [
+        {
+          "product_id": 1,
+          "name": "MuscleBlaze Biozyme Performance Whey 2kg",
+          "unit_price": 4499.0,
+          "quantity": 1,
+          "line_total": 4499.0,
+          "flavour": "Rich Milk Chocolate"
+        }
+      ],
+      "subtotal": 4499.0,
+      "combo_discount": 0.0,
+      "coupon_code": "FIT10",
+      "coupon_discount": 449.9,
+      "total_discount": 449.9,
+      "free_gifts": [
+        "MuscleBlaze Premium Shaker Bottle (Free)"
+      ],
+      "final_total": 4049.1,
+      "is_valid": true,
+      "error_message": null
+    },
+    "status": "PAYMENT_PENDING",
+    "wallet_paid": 0.0,
+    "razorpay_paid": 0.0,
+    "razorpay_pending": 4049.1,
+    "razorpay_payment_link": "https://rzp.io/rzp/FIyA4M3F",
+    "razorpay_payment_id": null,
+    "audit": {
+      "agent_id": "AGENT-MB-ROHAN-01",
+      "kya_verified": true,
+      "channel": "VOICE_AI_SARVAM_GROQ",
+      "spend_rails_passed": true,
+      "state_history": [
+        {
+          "state": "PRICE_CONFIRMED",
+          "timestamp": "2026-09-05 20:08:46"
+        },
+        {
+          "state": "CUSTOMER_APPROVED",
+          "timestamp": "2026-09-05 20:08:46"
+        },
+        {
+          "state": "PAYMENT_PENDING",
+          "timestamp": "2026-09-05 20:08:46"
+        }
+      ],
+      "created_at": "2026-09-05 20:08:46"
+    },
+    "created_at": "2026-09-05 20:08:46",
+    "updated_at": "2026-09-05 20:08:46"
+  },
+  "MB-ORD-20260905-ADD2D8": {
+    "order_id": "MB-ORD-20260905-ADD2D8",
+    "customer_name": "Sir",
+    "delivery_address": "\u0920\u0940\u0915 \u0939\u0948, \u0924\u0941\u092e \u090f\u0915 \u0915\u093e\u092e \u0915\u0930, \u0911\u0930\u094d\u0921\u0930 \u0915\u0930\u094b \u0907\u0938\u0915\u094b\u0964",
+    "payment_method": "ONLINE",
+    "items": [
+      {
+        "product_id": 1,
+        "name": "MuscleBlaze Biozyme Performance Whey 2kg",
+        "unit_price": 4499.0,
+        "quantity": 1,
+        "line_total": 4499.0,
+        "flavour": "Rich Milk Chocolate"
+      }
+    ],
+    "quote": {
+      "items": [
+        {
+          "product_id": 1,
+          "name": "MuscleBlaze Biozyme Performance Whey 2kg",
+          "unit_price": 4499.0,
+          "quantity": 1,
+          "line_total": 4499.0,
+          "flavour": "Rich Milk Chocolate"
+        }
+      ],
+      "subtotal": 4499.0,
+      "combo_discount": 0.0,
+      "coupon_code": "FIT10",
+      "coupon_discount": 449.9,
+      "total_discount": 449.9,
+      "free_gifts": [
+        "MuscleBlaze Premium Shaker Bottle (Free)"
+      ],
+      "final_total": 4049.1,
+      "is_valid": true,
+      "error_message": null
+    },
+    "status": "PAYMENT_PENDING",
+    "wallet_paid": 0.0,
+    "razorpay_paid": 0.0,
+    "razorpay_pending": 4049.1,
+    "razorpay_payment_link": "https://rzp.io/rzp/eWyQV2aj",
+    "razorpay_payment_id": null,
+    "audit": {
+      "agent_id": "AGENT-MB-ROHAN-01",
+      "kya_verified": true,
+      "channel": "VOICE_AI_SARVAM_GROQ",
+      "spend_rails_passed": true,
+      "state_history": [
+        {
+          "state": "PRICE_CONFIRMED",
+          "timestamp": "2026-09-05 20:10:12"
+        },
+        {
+          "state": "CUSTOMER_APPROVED",
+          "timestamp": "2026-09-05 20:10:12"
+        },
+        {
+          "state": "PAYMENT_PENDING",
+          "timestamp": "2026-09-05 20:10:12"
+        }
+      ],
+      "created_at": "2026-09-05 20:10:12"
+    },
+    "created_at": "2026-09-05 20:10:12",
+    "updated_at": "2026-09-05 20:10:12"
   }
 }

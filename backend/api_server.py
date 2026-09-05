@@ -607,6 +607,15 @@ def process_turn(session_id: str, customer_name: str, user_text: str, lang_code:
             else:
                 cleaned_reply = f"माफ़ कीजिएगा {display_name} जी, आपकी आवाज़ थोड़ी साफ़ नहीं आ पाई। क्या आप एक बार फिर से बताएंगे?"
 
+    # Ensure checkout stage replies always ask for address and COD / Online payment method
+    if (active_quote or prompt_manager.current_stage == "checkout") and not order_result:
+        reply_lower = cleaned_reply.lower()
+        if not any(w in reply_lower for w in ["cod", "payment", "online", "upi", "कैश", "पेमेंट", "एड्रेस"]):
+            if "te" in lang_code:
+                cleaned_reply += " దయచేసి మీ డెలివరీ అడ్రస్ మరియు పేమెంట్ మెథడ్ (COD లేదా Online/UPI) తెలియజేయండి!"
+            else:
+                cleaned_reply += " Order confirm karne ke liye kripya apna delivery address aur payment method (COD ya Online/UPI) bataiye!"
+
     history.append({"role": "assistant", "content": cleaned_reply})
     
     # Synthesize audio
@@ -661,6 +670,20 @@ async def razorpay_webhook_endpoint(request: Request):
         return {"status": "ignored", "reason": "No order_id in notes"}
         
     return handle_razorpay_webhook(event, payment_id, order_id, amount_paid)
+
+@app.api_route("/api/reset-session", methods=["GET", "POST"])
+def reset_all_sessions():
+    """Clear all stored chat histories, session memories, and reset sales prompt stage to greeting."""
+    SESSION_HISTORIES.clear()
+    SESSION_NAMES.clear()
+    prompt_manager.current_stage = "greeting"
+    prompt_manager.customer_name = "Guest Customer"
+    prompt_manager.fitness_goal = "Muscle Building / Fitness"
+    print("🧹 [SESSION MEMORY CLEARED] All chat histories reset for a fresh video recording!")
+    return {
+        "status": "success",
+        "message": "All session memories & chat histories cleared successfully. Ready for fresh demo!"
+    }
 
 # =========================================================================
 # MERCHANT DASHBOARD API ENDPOINTS
