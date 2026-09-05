@@ -387,22 +387,38 @@ export default function MerchantDashboard() {
               </div>
             </div>
 
-            <button
-              onClick={handleSaveConfig}
-              className="py-3 px-6 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 text-black font-extrabold text-xs shadow-lg hover:opacity-90 transition-all flex items-center space-x-2 cursor-pointer"
-            >
-              <Save className="w-4 h-4" />
-              <span>Save Voice Agent Configuration</span>
-            </button>
+            <div className="flex items-center space-x-3">
+              <button
+                onClick={handleSaveConfig}
+                className="py-3 px-6 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 text-black font-extrabold text-xs shadow-lg hover:opacity-90 transition-all flex items-center space-x-2 cursor-pointer active:scale-95"
+              >
+                <Save className="w-4 h-4" />
+                <span>Save Voice Agent Configuration</span>
+              </button>
+              {saveStatus && (
+                <span className="text-xs font-extrabold text-emerald-400 bg-emerald-500/10 px-3.5 py-2 rounded-xl border border-emerald-500/20 flex items-center space-x-1.5 animate-fadeIn">
+                  <CheckCircle className="w-4 h-4 text-emerald-400" />
+                  <span>{saveStatus}</span>
+                </span>
+              )}
+            </div>
           </div>
         )}
 
         {/* TAB 3: KNOWLEDGE BASE DOCUMENTS */}
         {activeTab === "knowledge" && config && (
           <div className="glass-card p-6 lg:p-8 rounded-3xl border border-gray-800 space-y-6 max-w-3xl">
-            <div>
-              <h3 className="font-extrabold text-lg text-white">Product Specs & Brand Knowledge Base</h3>
-              <p className="text-xs text-gray-400">Upload or edit product specification details, lab certifications, dosage rules, or warranty guidelines.</p>
+            <div className="flex items-center justify-between border-b border-gray-800 pb-4">
+              <div>
+                <h3 className="font-extrabold text-lg text-white">Product Specs & Brand Knowledge Base</h3>
+                <p className="text-xs text-gray-400">Upload or edit product specification details, lab certifications, dosage rules, or warranty guidelines.</p>
+              </div>
+              {saveStatus && (
+                <span className="text-xs font-bold text-emerald-400 bg-emerald-500/10 px-3.5 py-1.5 rounded-xl border border-emerald-500/20 flex items-center space-x-1.5 animate-fadeIn">
+                  <CheckCircle className="w-4 h-4 text-emerald-400" />
+                  <span>{saveStatus}</span>
+                </span>
+              )}
             </div>
 
             <div>
@@ -416,13 +432,21 @@ export default function MerchantDashboard() {
               />
             </div>
 
-            <button
-              onClick={handleSaveConfig}
-              className="py-3 px-6 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 text-black font-extrabold text-xs shadow-lg hover:opacity-90 transition-all flex items-center space-x-2 cursor-pointer"
-            >
-              <Save className="w-4 h-4" />
-              <span>Save Knowledge Base Specs</span>
-            </button>
+            <div className="flex items-center space-x-3">
+              <button
+                onClick={handleSaveConfig}
+                className="py-3 px-6 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 text-black font-extrabold text-xs shadow-lg hover:opacity-90 transition-all flex items-center space-x-2 cursor-pointer active:scale-95"
+              >
+                <Save className="w-4 h-4" />
+                <span>Save Knowledge Base Specs</span>
+              </button>
+              {saveStatus && (
+                <span className="text-xs font-extrabold text-emerald-400 bg-emerald-500/10 px-3.5 py-2 rounded-xl border border-emerald-500/20 flex items-center space-x-1.5 animate-fadeIn">
+                  <CheckCircle className="w-4 h-4 text-emerald-400" />
+                  <span>{saveStatus}</span>
+                </span>
+              )}
+            </div>
           </div>
         )}
 
