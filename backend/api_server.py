@@ -411,8 +411,8 @@ def groq_post_with_retry(payload: dict, max_retries: int = 3) -> dict:
                         continue
                 return res_json
             elif res.status_code == 429:
-                print(f"⏳ [429 RATE LIMIT] Key ending in ...{current_key[-6:]} rate limited. Waiting 1.0s and rotating to next Groq API key...")
-                time.sleep(1.0)
+                print(f"⏳ [429 RATE LIMIT] Key ending in ...{current_key[-6:]} rate limited. Waiting 1.5s and rotating to next Groq API key...")
+                time.sleep(1.5)
                 continue
             else:
                 print(f"⚠️ Groq API Error ({res.status_code}): {res.text}")
@@ -543,6 +543,31 @@ def process_turn(session_id: str, customer_name: str, user_text: str, lang_code:
                     highlighted_products.extend(p_data)
         except Exception as e:
             print(f"Auto product search fallback error: {e}")
+
+    # Automatic Checkout Execution Fallback if stage is checkout and LLM was rate-limited or didn't invoke tool
+    if not order_result and prompt_manager.current_stage == "checkout":
+        try:
+            pay_method = "COD" if any(w in user_text.lower() for w in ["cod", "cash", "कैश", "सीओडी", "कैश ऑन डिलीवरी"]) else "ONLINE"
+            addr = user_text if len(user_text) > 10 else "Visakhapatnam, Andhra Pradesh"
+            # Determine order item from history or default to Biozyme Whey
+            order_item_name = "MuscleBlaze Biozyme Performance Whey 2kg"
+            for m in reversed(history):
+                if m.get("role") == "user" and any(w in m.get("content", "").lower() for w in ["oats", "ओट्स", "creatine", "gainer"]):
+                    if "oats" in m.get("content", "").lower() or "ओट्स" in m.get("content", "").lower():
+                        order_item_name = "MuscleBlaze High Protein Oats Chocolate 1kg"
+                    break
+            
+            tool_res = TOOL_FUNCTION_MAP["process_order_checkout"](
+                items=[{"product_name": order_item_name, "quantity": 1}],
+                customer_name=display_name,
+                payment_method=pay_method,
+                delivery_address=addr
+            )
+            if tool_res and isinstance(tool_res, str) and tool_res.startswith("{"):
+                order_result = json.loads(tool_res)
+                print(f"✅ [AUTO CHECKOUT FALLBACK EXECUTED] Order #{order_result.get('order_id')} created!")
+        except Exception as e:
+            print(f"Auto checkout fallback error: {e}")
 
     # Deterministic Tool-Aware Fallback if Qwen text output was empty or invalid
     if not cleaned_reply:
